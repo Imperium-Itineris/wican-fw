@@ -3886,7 +3886,7 @@ static void execute_pid(pid_data_t *curr_pid, bool check_timers) {
         memset(elm327_response, 0, sizeof(response_t));
 
         xSemaphoreGive(autopid_config->mutex);
-        BaseType_t got_response = xQueueReceive(autopidQueue, elm327_response, pdMS_TO_TICKS(1000));
+        BaseType_t got_response = xQueueReceive(autopidQueue, elm327_response, pdMS_TO_TICKS(6000));
         xSemaphoreTake(autopid_config->mutex, portMAX_DELAY);
 
         if (got_response == pdPASS) {
@@ -4882,7 +4882,7 @@ static void autopid_publish_status_mqtt(void) {
 
     // Publish the payload
     if (should_publish) {
-        char *status_json = config_server_get_status_json(false);
+        char *status_json = config_server_get_status_json(true);
         if (status_json) {
             const char *topic = config_server_get_mqtt_status_topic();
             // Publish with QoS 0, Retain 0
