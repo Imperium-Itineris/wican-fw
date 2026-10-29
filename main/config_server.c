@@ -1823,15 +1823,15 @@ char *config_server_get_status_json(bool remove_sensitive_info)
 	cJSON_AddStringToObject(root, "ap_ssid_en", device_config.ap_ssid_en);
 	cJSON_AddStringToObject(root, "ap_ssid", device_config.ap_ssid);
 	cJSON_AddStringToObject(root, "ap_auto_disable", device_config.ap_auto_disable);
+	cJSON_AddStringToObject(root, "sta_ssid", device_config.sta_ssid);
+	cJSON_AddStringToObject(root, "sta_ip_type", device_config.sta_ip_type);
  
-        if(!remove_sensitive_info)
+    if(!remove_sensitive_info)
 	{
-		cJSON_AddStringToObject(root, "sta_ssid", device_config.sta_ssid);
 		cJSON_AddStringToObject(root, "sta_pass", device_config.sta_pass);
 		cJSON_AddStringToObject(root, "sta_security", device_config.sta_security);
 
 		// --- NEW: Export Primary Static IP Fields ---
-		cJSON_AddStringToObject(root, "sta_ip_type", device_config.sta_ip_type);
 		cJSON_AddStringToObject(root, "sta_static_ip", device_config.sta_static_ip);
 		cJSON_AddStringToObject(root, "sta_netmask", device_config.sta_netmask);
 		cJSON_AddStringToObject(root, "sta_gateway", device_config.sta_gateway);
@@ -1870,10 +1870,7 @@ char *config_server_get_status_json(bool remove_sensitive_info)
 	cJSON_AddStringToObject(root, "drive_connection_type", device_config.drive_connection_type);
 	cJSON_AddStringToObject(root, "drive_mode_timeout", device_config.drive_mode_timeout);
 	cJSON_AddStringToObject(root, "sta_status", (wifi_mgr_is_sta_connected()?"Connected":"Not Connected"));
-	if(!remove_sensitive_info)
-	{
-		cJSON_AddStringToObject(root, "sta_ip", ip_str);
-	}
+	cJSON_AddStringToObject(root, "sta_ip", ip_str);
 	cJSON_AddStringToObject(root, "mdns", wc_mdns_get_hostname());
 	cJSON_AddStringToObject(root, "ble_status", device_config.ble_status);
 	cJSON_AddStringToObject(root, "ble_power", device_config.ble_power);

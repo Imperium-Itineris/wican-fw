@@ -91,16 +91,17 @@ bool autopid_pause_is_boot_pid_polling_keep_alive_active(const autopid_config_t 
     bool within_boot_threshold = uptime_us < keep_alive_us;
 
     /* A wake from sleep is implemented as a full software reboot
-     * (see sleep_mode.c, RESTART_TRACKER_PLANNED_REASON_POWER_WAKE),
+     * (see sleep_mode.c, RESTART_TRACKER_PLANNED_REASON_POWER_WAKE for voltage wakes),
      * which resets the uptime timer. Without this guard the boot
-     * keep-alive window re-opens on every wake, so with the battery
+     * keep-alive window re-opens on every voltage wake, so with the battery
      * near the sleep threshold the polling load can pull the voltage
      * back under it, causing a poll -> sag -> sleep -> wake -> poll
-     * oscillation. Skip the boot window for wake-from-sleep reboots;
-     * the voltage-rise and motion triggers remain the intended resume
-     * paths after sleep. If the tracker has no valid record, fall
-     * through to the existing behavior. Only checked when we're still
-     * inside the boot window, to avoid the extra call once it's expired. */
+     * oscillation. Skip the boot window for voltage-wake reboots.
+     * Timer wakes (RESTART_TRACKER_PLANNED_REASON_TIMER_WAKE) still honor
+     * the boot window so scheduled checks (e.g. parked EV charge status)
+     * can poll. If the tracker has no valid record, fall through to
+     * the existing behavior. Only checked when we're still inside
+     * the boot window, to avoid the extra call once it's expired. */
     if (within_boot_threshold)
     {
         restart_tracker_record_t latest_record;

@@ -1125,7 +1125,7 @@ void light_sleep_task(void *pvParameters)
                         }
 
                         if (should_wake) {
-                            restart_tracker_restart(RESTART_TRACKER_PLANNED_REASON_POWER_WAKE,
+                            restart_tracker_restart(RESTART_TRACKER_PLANNED_REASON_TIMER_WAKE,
                                                     RESTART_TRACKER_SOURCE_SLEEP_MODE,
                                                     RESTART_TRACKER_FLAG_NONE);
                         }

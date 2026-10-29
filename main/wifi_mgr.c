@@ -791,6 +791,8 @@ esp_err_t wifi_mgr_deinit(void) {
 
     // Drain in-flight tcpip work (ARP, DHCP, broadcasts) so packets don't
     // reach wifi_transmit_wrap after the driver is freed.
+    vTaskDelay(pdMS_TO_TICKS(500));
+
     // Deinitialize WiFi
     esp_err_t ret = esp_wifi_deinit();
     if (ret != ESP_OK) {
