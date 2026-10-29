@@ -47,6 +47,7 @@ set(requires
     fatfs
     vfs
     driver
+    esp_driver_uart
     esp-tls
     esp_adc
     esp_eth
@@ -57,7 +58,7 @@ set(requires
     spiffs
     freertos
     mqtt
-    json
+    espressif__cjson
     wear_levelling
     esp_http_client
     spi_flash
@@ -76,6 +77,12 @@ set(requires
     restart_tracker
     microlink
 )
+
+# IDF 6.0 moved the USB CDC-ACM ROM console VFS (esp_vfs_cdcacm.h) out of
+# esp_vfs_console into its own component, which does not exist on IDF 5.x.
+if(${IDF_VERSION_MAJOR} GREATER_EQUAL 6)
+    list(APPEND requires esp_usb_cdc_rom_console)
+endif()
 
 # Register the component
 idf_component_register(
@@ -104,6 +111,7 @@ idf_component_register(
         "web/src/dashboard_live.js"
         "web/safemode.html"
         # "obd_fw/V2.3.18.txt"
-        "obd_fw/V2.3.22.txt"
+        # "obd_fw/V2.3.22.txt"
+        "obd_fw/V2.3.24.txt"
         "logo.txt"
 )

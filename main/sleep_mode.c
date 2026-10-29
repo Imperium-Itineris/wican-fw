@@ -1069,7 +1069,7 @@ void light_sleep_task(void *pvParameters)
                         ESP_LOGI(TAG, "Condition recovered, returning to normal mode");
                         current_state = STATE_NORMAL;
                     } 
-                    else if (wc_timer_is_expired(&sleep_timer)) 
+                    else if (wc_timer_is_expired(&sleep_timer))
 					{
                         ESP_LOGI(TAG, "Low voltage timeout expired, entering sleep mode");
                         current_state = STATE_SLEEPING;

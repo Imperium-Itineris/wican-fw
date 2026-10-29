@@ -61,10 +61,9 @@ void wc_mdns_init(char *id, char* hv, char* fv)
     };
 
     // Change service type to _wican for better discovery
-    ESP_ERROR_CHECK_WITHOUT_ABORT(mdns_service_add("WiCAN-WebServer", "_wican", "_tcp", 80, 
+    ESP_ERROR_CHECK_WITHOUT_ABORT(mdns_service_add("WiCAN-WebServer", "_wican", "_tcp", 80,
                                      serviceTxtData, sizeof(serviceTxtData) / sizeof(serviceTxtData[0])));
 }
-
 
 void wc_mdns_deinit(void)
 {
